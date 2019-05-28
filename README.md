@@ -6,5 +6,5 @@ The goal of this project is to generate a new model for CCRs that will account f
 Required files include: 
 1) exter.py function to read the gff file 
 2) pathoscore.py function from [PathoScore repository](https://github.com/quinlan-lab/pathoscore/blob/master/pathoscore.py)
-3) PathoScore Clinvar truth sets [see here to make the Clinvary truth-set directory](https://github.com/quinlan-lab/pathoscore/tree/master/truth-sets/GRCh37/clinvar)
+3) PathoScore Clinvar truth sets: [see here to make the Clinvary truth-set directory](https://github.com/quinlan-lab/pathoscore/tree/master/truth-sets/GRCh37/clinvar)
 4) 
