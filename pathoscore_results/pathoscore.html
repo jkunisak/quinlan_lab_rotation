@@ -1,0 +1,144 @@
+<html>
+
+<head>
+  <!-- Plotly.js and Datatables.js -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <style type="text/css" class="init">
+    
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <title>pathoscore</title>
+
+</head>
+
+<body>
+<pre>
+date: 2019-05-27
+created with <a href=https://github.com/quinlan-lab/pathoscore>pathoscore</a> version: 0.1.3
+</pre>
+
+  <p><i>pathoscore</i> evaluates pathogenicity tools and scores.</p>
+
+  In this evaluation, there were <b>21219 pathogenic</b> (51.3% indels) and <b>4699 benign</b>
+  (6.3% indels) variants that could be scored.
+
+  <h3>Distribution of variants scored</h3>  
+  <div id="scored-plot-div"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <h3>Receiver Operating Characteristic Curves</h3>
+  <div id="roc-plot-div"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <h3>Precision-Recall Curves</h3>
+  <div id="pr-plot-div"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <h3>Youden's J Statistic</h3>
+  <div id="J-barplot-div"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <h3>Youden's J Distribution</h3>
+  <div id="J-distplot-div"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <h3>Distribution of Scores for Pathogenic and Benign</h3>
+  <div id="score_step_new_CCR"></div>
+
+  <hr />
+  <h3>Clinical Utility for Genes of Interest</h3>
+  <div class="content">
+  <table id="clinical-utility" class="display" width="100%"></table>
+  </div>
+  <h3>command</h3>
+  <pre>/Users/jasonkunisaki/Desktop/quinlan_lab_rotation/chr20/pathoscore.py evaluate -s new_CCR pathogenic.vcf.gz benign.vcf.gz</pre>
+  <script>
+
+var trace1 = {
+  x: ['new_CCR'],
+  y: [276],
+  name: 'scored pathogenic',
+  type: 'bar',
+  marker: { color: 'rgb(76, 114, 176)'},
+};
+
+var trace2 = {
+  x: ['new_CCR'],
+  y: [72],
+  name: 'scored benign',
+  marker: { color: 'rgb(64, 96, 149)'},
+  type: 'bar'
+};
+
+var trace3 = {
+  x: ['new_CCR'],
+  y: [20943],
+  name: 'unscored pathogenic',
+  marker: { color: 'rgb(229, 229, 229)' },
+  type: 'bar'
+};
+
+var trace4 = {
+  x: ['new_CCR'],
+  y: [4627],
+  name: 'unscored benign',
+  marker: { color: 'rgb(204, 204, 204)'},
+  type: 'bar'
+}
+
+var data = [trace1, trace2, trace3, trace4];
+var layout = {
+	barmode: 'stack',
+	yaxis: {title: 'Count'},
+}
+Plotly.newPlot('scored-plot-div', data, layout);
+
+var roc_layout = {
+	hovermode: 'closest',
+	width: 900,
+	height: 900,
+	xaxis: {title: 'FPR', domain: [0, 1]},
+	yaxis: {title: 'TPR', domain: [0, 1]},
+	legend: {
+		x: 0.7,
+		y: 0.1
+	},
+}
+Plotly.newPlot('roc-plot-div', [{"x": [0, 1], "y": [0, 1], "mode": "lines", "showlegend": false, "hoverinfo": "none", "line": {"color": "rgb(200, 200, 200)", "width": 3, "dash": "dash"}}, {"x": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.014, 0.014, 0.014, 0.028, 0.028, 0.028, 0.028, 0.028, 0.028, 0.028, 0.028, 0.028, 0.042, 0.056, 0.056, 0.056, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.083, 0.083, 0.083, 0.111, 1.0], "y": [0.0, 0.029, 0.076, 0.08, 0.105, 0.112, 0.116, 0.145, 0.152, 0.159, 0.188, 0.196, 0.203, 0.225, 0.257, 0.261, 0.279, 0.286, 0.297, 0.319, 0.326, 0.337, 0.341, 0.359, 0.366, 0.388, 0.402, 0.409, 0.431, 0.435, 0.453, 0.464, 0.478, 0.5, 0.525, 0.536, 0.543, 0.565, 0.587, 0.612, 0.659, 0.688, 0.721, 0.764, 0.797, 0.808, 0.826, 0.83, 1.0], "text": ["<b>new_CCR</b> FPR: 0.00, TPR: 0.00 at score: 100.99", "<b>new_CCR</b> FPR: 0.00, TPR: 0.03 at score: 99.99", "<b>new_CCR</b> FPR: 0.00, TPR: 0.08 at score: 99.98", "<b>new_CCR</b> FPR: 0.00, TPR: 0.08 at score: 99.97", "<b>new_CCR</b> FPR: 0.00, TPR: 0.11 at score: 99.96", "<b>new_CCR</b> FPR: 0.00, TPR: 0.11 at score: 99.95", "<b>new_CCR</b> FPR: 0.00, TPR: 0.12 at score: 99.94", "<b>new_CCR</b> FPR: 0.00, TPR: 0.14 at score: 99.92", "<b>new_CCR</b> FPR: 0.00, TPR: 0.15 at score: 99.90", "<b>new_CCR</b> FPR: 0.00, TPR: 0.16 at score: 99.88", "<b>new_CCR</b> FPR: 0.00, TPR: 0.19 at score: 99.82", "<b>new_CCR</b> FPR: 0.00, TPR: 0.20 at score: 99.81", "<b>new_CCR</b> FPR: 0.00, TPR: 0.20 at score: 99.74", "<b>new_CCR</b> FPR: 0.00, TPR: 0.22 at score: 99.62", "<b>new_CCR</b> FPR: 0.00, TPR: 0.26 at score: 99.52", "<b>new_CCR</b> FPR: 0.00, TPR: 0.26 at score: 99.48", "<b>new_CCR</b> FPR: 0.00, TPR: 0.28 at score: 99.44", "<b>new_CCR</b> FPR: 0.00, TPR: 0.29 at score: 99.39", "<b>new_CCR</b> FPR: 0.00, TPR: 0.30 at score: 99.34", "<b>new_CCR</b> FPR: 0.00, TPR: 0.32 at score: 99.22", "<b>new_CCR</b> FPR: 0.00, TPR: 0.33 at score: 99.14", "<b>new_CCR</b> FPR: 0.01, TPR: 0.34 at score: 98.98", "<b>new_CCR</b> FPR: 0.01, TPR: 0.34 at score: 98.76", "<b>new_CCR</b> FPR: 0.01, TPR: 0.36 at score: 98.62", "<b>new_CCR</b> FPR: 0.03, TPR: 0.37 at score: 98.47", "<b>new_CCR</b> FPR: 0.03, TPR: 0.39 at score: 98.11", "<b>new_CCR</b> FPR: 0.03, TPR: 0.40 at score: 97.87", "<b>new_CCR</b> FPR: 0.03, TPR: 0.41 at score: 97.64", "<b>new_CCR</b> FPR: 0.03, TPR: 0.43 at score: 97.32", "<b>new_CCR</b> FPR: 0.03, TPR: 0.43 at score: 96.95", "<b>new_CCR</b> FPR: 0.03, TPR: 0.45 at score: 96.58", "<b>new_CCR</b> FPR: 0.03, TPR: 0.46 at score: 96.07", "<b>new_CCR</b> FPR: 0.03, TPR: 0.48 at score: 95.46", "<b>new_CCR</b> FPR: 0.04, TPR: 0.50 at score: 94.88", "<b>new_CCR</b> FPR: 0.06, TPR: 0.53 at score: 94.12", "<b>new_CCR</b> FPR: 0.06, TPR: 0.54 at score: 93.19", "<b>new_CCR</b> FPR: 0.06, TPR: 0.54 at score: 92.28", "<b>new_CCR</b> FPR: 0.07, TPR: 0.57 at score: 91.05", "<b>new_CCR</b> FPR: 0.07, TPR: 0.59 at score: 89.50", "<b>new_CCR</b> FPR: 0.07, TPR: 0.61 at score: 87.99", "<b>new_CCR</b> FPR: 0.07, TPR: 0.66 at score: 85.89", "<b>new_CCR</b> FPR: 0.07, TPR: 0.69 at score: 83.24", "<b>new_CCR</b> FPR: 0.07, TPR: 0.72 at score: 80.69", "<b>new_CCR</b> FPR: 0.07, TPR: 0.76 at score: 77.12", "<b>new_CCR</b> FPR: 0.08, TPR: 0.80 at score: 72.63", "<b>new_CCR</b> FPR: 0.08, TPR: 0.81 at score: 68.21", "<b>new_CCR</b> FPR: 0.08, TPR: 0.83 at score: 61.89", "<b>new_CCR</b> FPR: 0.11, TPR: 0.83 at score: 54.03", "<b>new_CCR</b> FPR: 1.00, TPR: 1.00 at score: 25.12"], "mode": "lines", "hoverinfo": "text", "line": {"color": "rgb(31, 119, 180)"}, "name": "new_CCR (AUC: 0.88, Peak J-score: 0.74)"}, {"x": [0.08333333333333333], "y": [0.8260869565217391], "marker": {"color": "rgb(31, 119, 180)", "size": 10}, "text": ["<b>J-index</b>: 0.74 => FPR: 0.08, TPR: 0.83 at score: 61.89"], "mode": "markers", "hoverinfo": "text", "showlegend": false, "type": "scatter"}], roc_layout);
+
+var pr_layout = {
+	hovermode: 'closest',
+	width: 900,
+	height: 900,
+	xaxis: {title: 'Recall', domain: [0, 1]},
+	yaxis: {title: 'Precision', domain: [0, 1]},
+	legend: {
+		x: 0.1,
+		y: 0.1
+	},
+}
+Plotly.newPlot('pr-plot-div', [{"x": [0, 1], "y": [0.8186974303572807, 0.8186974303572807], "mode": "lines", "showlegend": false, "hoverinfo": "none", "line": {"color": "rgb(200, 200, 200)", "width": 3, "dash": "dash"}}, {"x": [1.0, 0.83, 0.826, 0.808, 0.797, 0.764, 0.721, 0.688, 0.659, 0.612, 0.587, 0.565, 0.543, 0.536, 0.525, 0.5, 0.478, 0.464, 0.453, 0.435, 0.431, 0.409, 0.402, 0.388, 0.377, 0.366, 0.359, 0.341, 0.337, 0.326, 0.319, 0.297, 0.286, 0.279, 0.261, 0.257, 0.225, 0.217, 0.21, 0.203, 0.199, 0.196, 0.188, 0.159, 0.156, 0.152, 0.145, 0.116, 0.112, 0.105, 0.08, 0.076, 0.029, 0.0], "y": [0.793, 0.966, 0.974, 0.974, 0.973, 0.977, 0.975, 0.974, 0.973, 0.971, 0.97, 0.969, 0.974, 0.974, 0.973, 0.979, 0.985, 0.985, 0.984, 0.984, 0.983, 0.983, 0.982, 0.982, 0.981, 0.981, 0.99, 0.989, 0.989, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "text": ["<b>new_CCR</b> Recall: 1.00, Precision: 0.79 at score: 25.12", "<b>new_CCR</b> Recall: 0.83, Precision: 0.97 at score: 54.03", "<b>new_CCR</b> Recall: 0.83, Precision: 0.97 at score: 61.89", "<b>new_CCR</b> Recall: 0.81, Precision: 0.97 at score: 68.21", "<b>new_CCR</b> Recall: 0.80, Precision: 0.97 at score: 72.63", "<b>new_CCR</b> Recall: 0.76, Precision: 0.98 at score: 77.12", "<b>new_CCR</b> Recall: 0.72, Precision: 0.98 at score: 80.69", "<b>new_CCR</b> Recall: 0.69, Precision: 0.97 at score: 83.24", "<b>new_CCR</b> Recall: 0.66, Precision: 0.97 at score: 85.89", "<b>new_CCR</b> Recall: 0.61, Precision: 0.97 at score: 87.99", "<b>new_CCR</b> Recall: 0.59, Precision: 0.97 at score: 89.50", "<b>new_CCR</b> Recall: 0.57, Precision: 0.97 at score: 91.05", "<b>new_CCR</b> Recall: 0.54, Precision: 0.97 at score: 92.28", "<b>new_CCR</b> Recall: 0.54, Precision: 0.97 at score: 93.19", "<b>new_CCR</b> Recall: 0.53, Precision: 0.97 at score: 94.12", "<b>new_CCR</b> Recall: 0.50, Precision: 0.98 at score: 94.88", "<b>new_CCR</b> Recall: 0.48, Precision: 0.99 at score: 95.46", "<b>new_CCR</b> Recall: 0.46, Precision: 0.98 at score: 96.07", "<b>new_CCR</b> Recall: 0.45, Precision: 0.98 at score: 96.58", "<b>new_CCR</b> Recall: 0.43, Precision: 0.98 at score: 96.95", "<b>new_CCR</b> Recall: 0.43, Precision: 0.98 at score: 97.32", "<b>new_CCR</b> Recall: 0.41, Precision: 0.98 at score: 97.64", "<b>new_CCR</b> Recall: 0.40, Precision: 0.98 at score: 97.87", "<b>new_CCR</b> Recall: 0.39, Precision: 0.98 at score: 98.11", "<b>new_CCR</b> Recall: 0.38, Precision: 0.98 at score: 98.31", "<b>new_CCR</b> Recall: 0.37, Precision: 0.98 at score: 98.47", "<b>new_CCR</b> Recall: 0.36, Precision: 0.99 at score: 98.62", "<b>new_CCR</b> Recall: 0.34, Precision: 0.99 at score: 98.76", "<b>new_CCR</b> Recall: 0.34, Precision: 0.99 at score: 98.98", "<b>new_CCR</b> Recall: 0.33, Precision: 1.00 at score: 99.14", "<b>new_CCR</b> Recall: 0.32, Precision: 1.00 at score: 99.22", "<b>new_CCR</b> Recall: 0.30, Precision: 1.00 at score: 99.34", "<b>new_CCR</b> Recall: 0.29, Precision: 1.00 at score: 99.39", "<b>new_CCR</b> Recall: 0.28, Precision: 1.00 at score: 99.44", "<b>new_CCR</b> Recall: 0.26, Precision: 1.00 at score: 99.48", "<b>new_CCR</b> Recall: 0.26, Precision: 1.00 at score: 99.52", "<b>new_CCR</b> Recall: 0.22, Precision: 1.00 at score: 99.62", "<b>new_CCR</b> Recall: 0.22, Precision: 1.00 at score: 99.69", "<b>new_CCR</b> Recall: 0.21, Precision: 1.00 at score: 99.73", "<b>new_CCR</b> Recall: 0.20, Precision: 1.00 at score: 99.74", "<b>new_CCR</b> Recall: 0.20, Precision: 1.00 at score: 99.76", "<b>new_CCR</b> Recall: 0.20, Precision: 1.00 at score: 99.81", "<b>new_CCR</b> Recall: 0.19, Precision: 1.00 at score: 99.82", "<b>new_CCR</b> Recall: 0.16, Precision: 1.00 at score: 99.88", "<b>new_CCR</b> Recall: 0.16, Precision: 1.00 at score: 99.89", "<b>new_CCR</b> Recall: 0.15, Precision: 1.00 at score: 99.90", "<b>new_CCR</b> Recall: 0.14, Precision: 1.00 at score: 99.92", "<b>new_CCR</b> Recall: 0.12, Precision: 1.00 at score: 99.94", "<b>new_CCR</b> Recall: 0.11, Precision: 1.00 at score: 99.95", "<b>new_CCR</b> Recall: 0.11, Precision: 1.00 at score: 99.96", "<b>new_CCR</b> Recall: 0.08, Precision: 1.00 at score: 99.97", "<b>new_CCR</b> Recall: 0.08, Precision: 1.00 at score: 99.98", "<b>new_CCR</b> Recall: 0.03, Precision: 1.00 at score: 99.99"], "mode": "lines", "hoverinfo": "text", "line": {"color": "rgb(31, 119, 180)"}, "name": "new_CCR (F1 score @ Peak J: 0.88)"}, {"x": [0.8260869565217391], "y": [0.9743589743589743], "marker": {"color": "rgb(31, 119, 180)", "size": 10}, "text": ["<b>F1 score</b>: 0.88 => Recall: 0.83, Precision: 0.97 at score: 61.89"], "mode": "markers", "hoverinfo": "text", "showlegend": false, "type": "scatter"}], pr_layout);
+
+var Jbar_layout = {
+	yaxis: {title: 'J-index'},
+}
+Plotly.newPlot('J-barplot-div', [{"x": ["new_CCR"], "y": [0.743], "type": "bar", "text": ["new_CCR"], "marker": {"color": ["rgb(31, 119, 180)"]}, "error_y": {"type": "data", "array": [0.04], "visible": true}}], Jbar_layout);
+
+var Jdist_layout = {
+	hovermode: 'closest',
+	width: 1100,
+	height: 900,
+	yaxis: {title: 'J-score'},
+	xaxis: {title: 'Normalized score'},
+}
+
+Plotly.newPlot('J-distplot-div', [{"x": [1.0, 0.987, 0.987, 0.987, 0.986, 0.986, 0.986, 0.986, 0.986, 0.985, 0.985, 0.984, 0.984, 0.982, 0.981, 0.98, 0.98, 0.979, 0.978, 0.977, 0.976, 0.974, 0.971, 0.969, 0.967, 0.962, 0.959, 0.956, 0.952, 0.947, 0.942, 0.935, 0.927, 0.919, 0.909, 0.897, 0.885, 0.869, 0.849, 0.829, 0.801, 0.766, 0.732, 0.685, 0.626, 0.568, 0.485, 0.381, 0.0], "y": [0.0, 0.029, 0.076, 0.08, 0.105, 0.112, 0.116, 0.145, 0.152, 0.159, 0.188, 0.196, 0.203, 0.225, 0.257, 0.261, 0.279, 0.286, 0.297, 0.319, 0.326, 0.323, 0.327, 0.345, 0.338, 0.36, 0.374, 0.382, 0.403, 0.407, 0.425, 0.436, 0.45, 0.458, 0.47, 0.481, 0.488, 0.496, 0.518, 0.543, 0.59, 0.619, 0.652, 0.695, 0.714, 0.725, 0.743, 0.719, 0.0], "text": ["<b>new_CCR</b> score: 100.99, J: 0.00", "<b>new_CCR</b> score: 99.99, J: 0.03", "<b>new_CCR</b> score: 99.98, J: 0.08", "<b>new_CCR</b> score: 99.97, J: 0.08", "<b>new_CCR</b> score: 99.96, J: 0.11", "<b>new_CCR</b> score: 99.95, J: 0.11", "<b>new_CCR</b> score: 99.94, J: 0.12", "<b>new_CCR</b> score: 99.92, J: 0.14", "<b>new_CCR</b> score: 99.90, J: 0.15", "<b>new_CCR</b> score: 99.88, J: 0.16", "<b>new_CCR</b> score: 99.82, J: 0.19", "<b>new_CCR</b> score: 99.81, J: 0.20", "<b>new_CCR</b> score: 99.74, J: 0.20", "<b>new_CCR</b> score: 99.62, J: 0.22", "<b>new_CCR</b> score: 99.52, J: 0.26", "<b>new_CCR</b> score: 99.48, J: 0.26", "<b>new_CCR</b> score: 99.44, J: 0.28", "<b>new_CCR</b> score: 99.39, J: 0.29", "<b>new_CCR</b> score: 99.34, J: 0.30", "<b>new_CCR</b> score: 99.22, J: 0.32", "<b>new_CCR</b> score: 99.14, J: 0.33", "<b>new_CCR</b> score: 98.98, J: 0.32", "<b>new_CCR</b> score: 98.76, J: 0.33", "<b>new_CCR</b> score: 98.62, J: 0.34", "<b>new_CCR</b> score: 98.47, J: 0.34", "<b>new_CCR</b> score: 98.11, J: 0.36", "<b>new_CCR</b> score: 97.87, J: 0.37", "<b>new_CCR</b> score: 97.64, J: 0.38", "<b>new_CCR</b> score: 97.32, J: 0.40", "<b>new_CCR</b> score: 96.95, J: 0.41", "<b>new_CCR</b> score: 96.58, J: 0.43", "<b>new_CCR</b> score: 96.07, J: 0.44", "<b>new_CCR</b> score: 95.46, J: 0.45", "<b>new_CCR</b> score: 94.88, J: 0.46", "<b>new_CCR</b> score: 94.12, J: 0.47", "<b>new_CCR</b> score: 93.19, J: 0.48", "<b>new_CCR</b> score: 92.28, J: 0.49", "<b>new_CCR</b> score: 91.05, J: 0.50", "<b>new_CCR</b> score: 89.50, J: 0.52", "<b>new_CCR</b> score: 87.99, J: 0.54", "<b>new_CCR</b> score: 85.89, J: 0.59", "<b>new_CCR</b> score: 83.24, J: 0.62", "<b>new_CCR</b> score: 80.69, J: 0.65", "<b>new_CCR</b> score: 77.12, J: 0.70", "<b>new_CCR</b> score: 72.63, J: 0.71", "<b>new_CCR</b> score: 68.21, J: 0.72", "<b>new_CCR</b> score: 61.89, J: 0.74", "<b>new_CCR</b> score: 54.03, J: 0.72", "<b>new_CCR</b> score: 25.12, J: 0.00"], "mode": "lines", "hoverinfo": "text", "line": {"color": "rgb(31, 119, 180)"}, "name": "new_CCR (Peak J: 0.74 @ score: 61.89)"}, {"x": [0.485], "y": [0.743], "text": ["<b>new_CCR</b> score: 0.48, J: 0.74"], "mode": "markers", "hoverinfo": "text", "showlegend": false, "type": "scatter", "marker": {"color": "rgb(31, 119, 180)", "size": 10}, "name": "new_CCR (Peak J: 0.74 @ score: 61.89)"}], Jdist_layout);
+
+Plotly.newPlot('score_step_new_CCR', [{"x": [25.12, 26.617, 28.115, 29.612, 31.11, 32.607, 34.104, 35.602, 37.099, 38.597, 40.094, 41.591, 43.089, 44.586, 46.084, 47.581, 49.078, 50.576, 52.073, 53.571, 55.068, 56.565, 58.063, 59.56, 61.058, 62.555, 64.052, 65.55, 67.047, 68.545, 70.042, 71.539, 73.037, 74.534, 76.032, 77.529, 79.026, 80.524, 82.021, 83.519, 85.016, 86.513, 88.011, 89.508, 91.006, 92.503, 94.0, 95.498, 96.995, 98.493, 99.99], "y": [0.17, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.004, 0.0, 0.0, 0.0, 0.0, 0.018, 0.0, 0.0, 0.0, 0.011, 0.0, 0.0, 0.033, 0.0, 0.0, 0.043, 0.0, 0.0, 0.033, 0.029, 0.0, 0.047, 0.025, 0.022, 0.0, 0.029, 0.011, 0.062, 0.033, 0.072, 0.359, 0.359], "mode": "lines", "line": {"color": "rgb(228, 26, 28)", "shape": "hv"}, "name": "pathogenic"}, {"x": [25.12, 26.597, 28.074, 29.552, 31.029, 32.506, 33.983, 35.46, 36.938, 38.415, 39.892, 41.369, 42.846, 44.324, 45.801, 47.278, 48.755, 50.232, 51.71, 53.187, 54.664, 56.141, 57.618, 59.096, 60.573, 62.05, 63.527, 65.004, 66.482, 67.959, 69.436, 70.913, 72.39, 73.868, 75.345, 76.822, 78.299, 79.776, 81.254, 82.731, 84.208, 85.685, 87.162, 88.64, 90.117, 91.594, 93.071, 94.548, 96.026, 97.503, 98.98], "y": [0.889, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.028, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.014, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.014, 0.0, 0.014, 0.014, 0.0, 0.028, 0.028], "mode": "lines", "line": {"color": "rgb(55, 126, 184)", "shape": "hv"}, "name": "benign"}], {"height": 250, "title": "new_CCR", "yaxis": {"title": "Frequency"}})
+
+jQuery(document).ready(function() {
+    jQuery('#clinical-utility').DataTable( {
+        data: [],
+        columns: [{'title': 'Genes'}]
+    } );
+} );
+
+  </script>
+
+
+</body>
+
+</html>

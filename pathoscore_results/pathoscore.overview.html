@@ -1,0 +1,41 @@
+<html>
+<title>pathoscore summary </title>
+<body>
+
+<pre>
+date: 2019-05-27
+created with <b><a href="https://github.com/quinlan-lab/pathoscore">pathoscore</a></b> version: 0.1.3
+
+</pre>
+
+<i>pathoscore evaluates variant pathogenicity tools and scores.</i>
+
+<p>
+In this evaluation, there were <b>21219 pathogenic</b> (51.3% indels)
+and <b>4699 benign</b> (6.3% indels) variants that could be scored.
+</p>
+
+
+<h3>Distribution of variants scored</h3>
+<img src="pathoscore.stats.svg"/>
+
+<h3>Receiver Operating Characteristic Curve</h3>
+<img src="pathoscore.roc.svg"/>
+
+<h3>Precision-Recall Curve</h3>
+<img src="pathoscore.pr.svg"/>
+
+<h3>Youden's J Statistic</h3>
+<img src="pathoscore.Jbar.svg"/>
+
+<h3>Youden's J Statistic (distribution)</h3>
+<img src="pathoscore.J.svg"/>
+
+<h3>Step Plot of Scores</h3>
+<img src="pathoscore.step.svg"/>
+
+<pre>
+invocation: /Users/jasonkunisaki/Desktop/quinlan_lab_rotation/chr20/pathoscore.py evaluate -s new_CCR pathogenic.vcf.gz benign.vcf.gz
+</pre>
+</body>
+</html>
