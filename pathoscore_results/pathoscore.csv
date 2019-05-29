@@ -1,2 +1,3 @@
 method,J,score@J,se(J),TPR@J,FPR@J,AUC,TP@J,FP@J,TN@J,FN@J
-new_CCR,0.7428,61.8900,0.0398,0.8261,0.0833,0.8783,228,6,66,48
+new_CCR_no_sift_polyphen_filter,0.8092,63.3500,0.0268,0.8231,0.0139,0.9027,228,1,71,49
+new_CCR_sift_cutoff_0.05_polyphen_cutoff_0.5_run,0.7398,62.5700,0.0398,0.8231,0.0833,0.8758,228,6,66,49
