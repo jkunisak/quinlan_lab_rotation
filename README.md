@@ -8,6 +8,8 @@ The goal of this project is to generate a new model for CCRs that will account f
 2) exter.py function to read the gff file 
 3) pathoscore.py function from [PathoScore repository](https://github.com/quinlan-lab/pathoscore/blob/master/pathoscore.py)
 4) PathoScore Clinvar truth sets: [see here to make the Clinvary truth-set directory](https://github.com/quinlan-lab/pathoscore/tree/master/truth-sets/GRCh37/clinvar)
+5) [gnomad exome and wgs vcf files](https://gnomad.broadinstitute.org/downloads)
+6) GFF transcript file 
 
 **Output files:**
 1) pathoscore results will be provided in the pathoscore_results output directory 
