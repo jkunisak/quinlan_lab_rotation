@@ -1,3 +1,7 @@
 method,J,score@J,se(J),TPR@J,FPR@J,AUC,TP@J,FP@J,TN@J,FN@J
+new_CCR_sift_cutoff_0.03_polyphen_cutoff_0.3_run,0.7120,62.2400,0.0436,0.8231,0.1111,0.8701,228,8,64,49
 new_CCR_no_sift_polyphen_filter,0.8092,63.3500,0.0268,0.8231,0.0139,0.9027,228,1,71,49
+new_CCR_sift_cutoff_0.04_polyphen_cutoff_0.4_run,0.7398,62.4000,0.0398,0.8231,0.0833,0.8760,228,6,66,49
+chr20_jim_ccr,0.0036,6491938.0000,0.0036,0.0036,0.0000,0.1063,1,0,65,274
 new_CCR_sift_cutoff_0.05_polyphen_cutoff_0.5_run,0.7398,62.5700,0.0398,0.8231,0.0833,0.8758,228,6,66,49
+new_CCR_no_combine_adjacent_variants,0.7953,63.3200,0.0300,0.8231,0.0278,0.9011,228,2,70,49
