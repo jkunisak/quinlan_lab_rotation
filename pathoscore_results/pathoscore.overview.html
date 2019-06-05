@@ -3,7 +3,7 @@
 <body>
 
 <pre>
-date: 2019-05-30
+date: 2019-06-04
 created with <b><a href="https://github.com/quinlan-lab/pathoscore">pathoscore</a></b> version: 0.1.3
 
 </pre>
@@ -35,7 +35,7 @@ and <b>4699 benign</b> (6.3% indels) variants that could be scored.
 <img src="pathoscore.step.svg"/>
 
 <pre>
-invocation: pathoscore.py evaluate -s new_CCR_sift_cutoff_0.03_polyphen_cutoff_0.3_run -s new_CCR_no_sift_polyphen_filter -s new_CCR_sift_cutoff_0.04_polyphen_cutoff_0.4_run -s chr20_jim_ccr -s new_CCR_sift_cutoff_0.05_polyphen_cutoff_0.908_vaf_cutoff_5th_percentile -s new_CCR_no_sift_polyphen_filter_vaf_cutoff_10th_percentile -s new_CCR_sift_cutoff_0.05_polyphen_cutoff_0.5_run -s new_CCR_no_combine_adjacent_variants -s new_CCR_sift_cutoff_0.05_polyphen_cutoff_0.908_vaf_cutoff_15th_percentile pathogenic.vcf.gz benign.vcf.gz
+invocation: pathoscore.py evaluate -s chr20_jim_ccr -s new_CCR_no_sift_polyphen_filter_no_vaf_filter pathogenic.vcf.gz benign.vcf.gz
 </pre>
 </body>
 </html>

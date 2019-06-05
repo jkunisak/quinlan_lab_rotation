@@ -7,8 +7,9 @@ library(data.table)
 library(reshape2)
 
 ## Read in chr20 data 
-jason_CCR = fread("~/Desktop/quinlan_lab_rotation/chr20/new_CCR.txt")
-jim_CCR = fread("~/Desktop/quinlan_lab_rotation/chr20/chr20_jim_ccr.txt")
+jason_CCR = fread("~/git/quinlan_lab_rotation/new_CCR_no_sift_polyphen_filter_no_vaf_filter.txt")
+jim_CCR = fread("~/git/quinlan_lab_rotation/chr20_jim_ccr.txt")
+jason_CCR[which(start > 62073700 & end < 62073900)]
 
 ## Generate an ID that cats chromosome, start, and end positions
 jason_CCR$CCR_ID = paste(jason_CCR$`#chrom`, paste(jason_CCR$start, jason_CCR$end, sep = "-"), sep=":")

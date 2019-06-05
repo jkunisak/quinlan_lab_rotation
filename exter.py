@@ -116,9 +116,8 @@ def read_gff(gff_path, CDS="CDS", union=True):
             try:
                 gene = D['gene'][transr[0]['parent']]
             except:
-                print(parents[transr[0]['parent']])
-                print("[exter] gene: %s not found" % transr[0]['parent'], file=sys.stderr)
-                raise
+                print(transr[0], "parent not found. skipping")
+                continue
             if not exon['chrom'] in result:
                 result[exon['chrom']] = Exter()
             result[exon['chrom']].add_exon(gene['name'], (exon['start'], exon['stop']))
